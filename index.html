@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Taiwo's Graphics Media</title>
+  <!-- Font Awesome CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #0a0f1c;
+      color: #fff;
+    }
+
+    /* Header / Hero Section */
+    header {
+      position: relative;
+      height: 350px;
+      background-image: url('https://images.unsplash.com/photo-1504384308090-9b6c3f00fdb8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    header::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: rgba(0,0,0,0.5);
+      z-index:1;
+    }
+
+    header .content {
+      position: relative;
+      z-index:2;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3rem;
+      color: #2f82ff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+
+    header p {
+      margin: 10px 0 20px;
+      font-size: 1.3rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+
+    header nav {
+      margin-bottom: 30px;
+    }
+
+    header nav a {
+      color:#fff;
+      text-decoration:none;
+      margin:0 20px;
+      font-weight:bold;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+      scroll-margin-top: 350px; /* ensures nav links scroll below header */
+    }
+
+    #about p, #vision-mission p {
+      color: #ccc;
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #111827;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #000;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: 0.6s;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 10px;
+      color: #2f82ff;
+    }
+
+    .card p {
+      margin: 0 10px 20px;
+      color: #ccc;
+    }
+
+    .show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: #1e293b;
+      color: #fff;
+    }
+
+    button {
+      padding: 10px;
+      background: #2f82ff;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e60cc;
+    }
+
+    .footer-icons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .footer-icons a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 1.8rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      color: #ccc;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+    }
+
+    /* Chatbot */
+    .chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2f82ff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 0 15px #2f82ff;
+      font-size: 1.5rem;
+    }
+
+    .chatbox {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 400px;
+      height: 60vh;
+      background: #111827;
+      border-radius: 15px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 20px #000;
+    }
+
+    .chat-header {
+      background: #2f82ff;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #333;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      background: #1e293b;
+      border: none;
+      color: #fff;
+      padding: 10px;
+    }
+
+    .chat-footer button {
+      background: #2f82ff;
+      border: none;
+      padding: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .bot, .user {
+      margin: 10px 0;
+      max-width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      word-wrap: break-word;
+    }
+
+    .bot {
+      background: #1e3a8a;
+      align-self: flex-start;
+    }
+
+    .user {
+      background: #2f82ff;
+      align-self: flex-end;
+    }
+
+    @media (max-width: 600px) {
+      .chatbox {
+        width: 90%;
+        right: 5%;
+        height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="content">
+    <h1>De Taiwo's Graphics Media</h1>
+    <p>Your satisfaction is our priority</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#vision-mission">Vision & Mission</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Order</a>
+    </nav>
+  </div>
+</header>
+
+<!-- About Section -->
+<section id="about">
+  <h2 style="text-align:center;color:#2f82ff;">About Us</h2>
+  <p>De Taiwo's Graphics Media is a professional business offering Graphic Design, Branding, Printing, Video Editing, Content Creation, and Website Design. We are dedicated to delivering high-quality creative services to ensure our clients' satisfaction is always our top priority.</p>
+</section>
+
+<!-- Vision & Mission Section -->
+<section id="vision-mission">
+  <h2 style="text-align:center;color:#2f82ff;">Our Vision & Mission</h2>
+  <div style="max-width:900px;margin:auto;text-align:center;">
+    <h3 style="color:#2f82ff;">Vision</h3>
+    <p style="color:#ccc;">To be the leading creative agency in Nigeria, delivering innovative and high-quality media solutions that help businesses and individuals thrive.</p>
+
+    <h3 style="color:#2f82ff;margin-top:30px;">Mission</h3>
+    <p style="color:#ccc;">To provide exceptional graphic design, branding, printing, video editing, content creation, and website design services with professionalism, creativity, and a focus on client satisfaction.</p>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+  <h2 style="text-align:center;">Our Services</h2>
+  <div class="services">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb‑4.0.3&auto=format&fit=crop&w=600&q=80
+     =format&fit=crop&w=600&q=80" alt="Graphic Design">
+      <h3>Graphic Design</h3>
+      <p>Professional and creative graphic designs for all needs.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Branding">
+      <h3>Branding</h3>
+      <p>Build a strong brand identity that stands out.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Printing">
+      <h3>Printing</h3>
+      <p>High-quality printing for flyers, banners, and more.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1590608897129-79da98d15969?auto=format&fit=crop&w=600&q=80" alt="Video Editing">
+      <h3>Video Editing</h3>
+      <p>Creative and engaging video editing for all platforms.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" alt="Content Creation">
+      <h3>Content Creation</h3>
+      <p>Engaging content tailored to your audience.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="Website Design">
+      <h3>Website Design</h3>
+      <p>Modern and responsive websites for your business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <h2 style="text-align:center;">Contact Us</h2>
+  <form action="https://formspree.io/f/xrbonyqg" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="tel" name="phone" placeholder="Your Phone Number" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <div class="footer-icons">
+    <a href="https://www.youtube.com/@DeTaiwoMedia" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.instagram.com/detaiwomedia" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/09131352086" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="tel:08023889622"><i class="fas fa-phone"></i></a>
+    <a href="mailto:detaiwosgraphics@gmail.com"><i class="fas fa-envelope"></i></a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 De Taiwo's Graphics Media. All Rights Reserved.
+</footer>
+
+<!-- Chatbot -->
+<div class="chat-icon" id="chatIcon">💬</div>
+<div class="chatbox" id="chatBox">
+  <div class="chat-header">Taiwo's Media Bot</div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-footer">
+    <input id="userInput" type="text" placeholder="Type here..." />
+    <button id="sendBtn">➤</button>
+  </div>
+</div>
+
+<script>
+  // Fade-in animation for services
+  const cards = document.querySelectorAll('.card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    });
+  });
+  cards.forEach(card => observer.observe(card));
+
+  // Chatbot
+  const chatIcon = document.getElementById('chatIcon');
+  const chatBox = document.getElementById('chatBox');
+  const chatBody = document.getElementById('chatBody');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
+  let step = 0;
+
+  chatIcon.onclick = () => {
+    chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+    if(step === 0) botMessage("Hi 👋 Welcome to De Taiwo's Graphics Media!");
+  };
+
+  function botMessage(text){
+    const msg = document.createElement('div');
+    msg.className = 'bot';
+    msg.innerText = text;
+    chatBody.appendChild(msg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function userMessage(text){
+    const msg = document.createElement('div');
+    msg.className = 'user';
+    msg.innerText = text;
+    chatBody.appendChild(msg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  sendBtn.onclick = () => {
+    const text = userInput.value.trim();
+    if(!text) return;
+    userMessage(text);
+    userInput.value = '';
+    setTimeout(()=> nextStep(text.toLowerCase()), 800);
+  };
+
+  function nextStep(input){
+    if(step === 0) botMessage("Can I have your phone number?");
+    else if(step === 1) botMessage("What's your name?");
+    else if(step === 2) botMessage("Where are you chatting from?");
+    else if(step === 3) botMessage("What service are you interested in?");
+    else if(step === 4){
+      botMessage("Awesome! 🎨 We offer: Graphic Design, Branding, Printing, Video Editing, Content Creation, and Website Design.");
+      setTimeout(()=> botMessage("For more details, contact the owner 👇\n📞 08023889622\n💬 WhatsApp: 09131352086\n📧 detaiwosgraphics@gmail.com\n📸 Instagram: @detaiwomedia\n▶️ YouTube: @DeTaiwoMedia"),1000);
+      setTimeout(()=> botMessage("Thanks for chatting with Taiwo’s Media Bot 😊 Have a great day!"),3000);
+      return;
+    }
+    step++;
+  }
+</script>
+
+</body>
+</html>
