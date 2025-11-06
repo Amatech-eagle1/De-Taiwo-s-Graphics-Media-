@@ -14,7 +14,7 @@
 
 ## Website
 
-- **Live Site**: [De Taiwo's Graphics Media](https://amatech-eagle-global-enterprises.netlify.app/
+- **Live Site**: [De Taiwo's Graphics Media](https://DeTaiwo'sGraphicsMedia.netlify.app/
 
 ## Social Media
 
